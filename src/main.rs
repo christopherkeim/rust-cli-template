@@ -1,3 +1,4 @@
+mod cli;
 mod files;
 mod html;
 mod markdown;
