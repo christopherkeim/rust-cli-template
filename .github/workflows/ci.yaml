@@ -1,0 +1,26 @@
+# GitHub Action runners come pre-installed with Cargo 1.76.0 (latest)
+
+name: CI
+on:
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Format
+        run: make format
+
+      - name: Test
+        run: make test
+
+      - name: Deploy
+        run: |
+          echo "Deploying..."
+          # make build
