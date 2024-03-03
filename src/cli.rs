@@ -1,7 +1,11 @@
 use clap::Parser;
 
 #[derive(Parser, Default, Debug)]
-#[command(version, about, long_about = None)]
+#[command(
+    version, 
+    about = "A simple CLI application that converts a webpage to markdown.", 
+    long_about = None
+)]
 pub struct Arguments {
     /// URL of webpage you'd like to convert
     #[arg(short = 'u', long = "url")]
