@@ -1,3 +1,4 @@
+mod files;
 mod html;
 mod markdown;
 
