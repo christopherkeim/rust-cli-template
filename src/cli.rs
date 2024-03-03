@@ -2,7 +2,7 @@ use clap::Parser;
 
 #[derive(Parser, Default, Debug)]
 #[command(
-    version, 
+    version = "0.1.0", 
     about = "A simple CLI application that converts a webpage to markdown.", 
     long_about = None
 )]
