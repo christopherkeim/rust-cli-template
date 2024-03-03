@@ -9,6 +9,7 @@ pub fn extract_html_from_webpage(url: String) -> Result<String, reqwest::Error> 
         Ok(response) => response,
         Err(http_error) => return Err(http_error),
     };
+
     match response.text() {
         Ok(html) => return Ok(html),
         Err(body_extract_failure) => return Err(body_extract_failure),
