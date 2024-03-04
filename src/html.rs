@@ -52,3 +52,59 @@ pub fn extract_html_from_webpage(url: String) -> Result<String, HtmlExtractionEr
         }
     };
 }
+
+/// `html` module unit testing
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// Empty URL
+    #[test]
+    fn empty_url_returns_early_with_error() {
+        let result = extract_html_from_webpage("".to_string())
+            .unwrap_err()
+            .to_string();
+
+        let expected_error = "Emtpy string passed as `url`.".to_string();
+
+        assert_eq!(result, expected_error);
+    }
+
+    #[test]
+    /// Invalid URL
+    fn invalid_url_returns_early_with_error() {
+        let result = extract_html_from_webpage("invalid_webpage.com".to_string())
+            .unwrap_err()
+            .to_string();
+
+        let expected_error = "Invalid URL.".to_string();
+
+        assert_eq!(result, expected_error);
+    }
+
+    #[test]
+    fn valid_request_returns_valid_html_string() {
+        let result = match extract_html_from_webpage("https://www.google.com".to_string()) {
+            Ok(html) => html,
+            Err(_) => "Failed! {}".to_string(),
+        };
+
+        let expected_doctype = "<!doctype html>";
+
+        assert!(result.starts_with(expected_doctype));
+    }
+
+    #[test]
+    fn invalid_request_returns_request_failure() {
+        let result =
+            match extract_html_from_webpage("https://www.nonexistentwebsite.com/".to_string()) {
+                Ok(html) => html,
+                Err(request_failure) => request_failure.to_string(),
+            };
+
+        let expected_error_message =
+            "error sending request for url (https://www.nonexistentwebsite.com/)";
+
+        assert!(result.starts_with(expected_error_message));
+    }
+}
