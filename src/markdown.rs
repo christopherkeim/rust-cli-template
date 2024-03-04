@@ -11,7 +11,7 @@ impl fmt::Display for HtmlConversionError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match *self {
             HtmlConversionError::EmptyHtml => {
-                write!(f, "Emtpy string passed as `html`.")
+                write!(f, "Empty string passed as `html`.")
             }
         }
     }
