@@ -34,13 +34,20 @@ impl fmt::Display for MarkdownFileError {
 /// # Arguments
 /// `markdown: String` a string holding markdown
 /// `file_name: String` name of output file
-pub fn write_markdown_file(markdown: String, file_name: &str) -> Result<(), MarkdownFileError> {
+pub fn write_markdown_file(
+    markdown: String,
+    file_name: &mut String,
+) -> Result<(), MarkdownFileError> {
     if markdown.is_empty() {
         return Err(MarkdownFileError::EmptyMarkdown);
     }
 
     if file_name.is_empty() {
         return Err(MarkdownFileError::EmptyFileName);
+    }
+
+    if !file_name.ends_with(".md") {
+        file_name.extend(".md".chars());
     }
 
     let mut md_file: File = match File::create(file_name) {
