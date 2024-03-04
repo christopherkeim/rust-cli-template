@@ -85,9 +85,9 @@ mod tests {
         assert_eq!(result, expected_error);
     }
 
-    #[test]
     /// Empty file name string
-    fn invalid_file_name_returns_early_with_error() {
+    #[test]
+    fn empty_file_name_returns_early_with_error() {
         let result: String =
             write_markdown_file("# Hello testing\n".to_string(), &mut "".to_string())
                 .unwrap_err()
@@ -98,6 +98,7 @@ mod tests {
         assert_eq!(result, expected_error);
     }
 
+    /// Valid markdown and file name
     #[test]
     fn valid_markdown_and_file_name_successfully_write_to_file() {
         let test_directory: tempfile::TempDir =
