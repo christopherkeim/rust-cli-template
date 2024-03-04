@@ -64,3 +64,68 @@ pub fn write_markdown_file(
         }
     };
 }
+
+/// `files` module unit tests
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::fs::read_to_string;
+    use std::path::Path;
+    use tempfile::tempdir;
+
+    /// Empty markdown string
+    #[test]
+    fn empty_markdown_returns_early_with_error() {
+        let result: String = write_markdown_file("".to_string(), &mut "testing.md".to_string())
+            .unwrap_err()
+            .to_string();
+
+        let expected_error: String = "Empty string passed as `markdown`.".to_string();
+
+        assert_eq!(result, expected_error);
+    }
+
+    #[test]
+    /// Empty file name string
+    fn invalid_file_name_returns_early_with_error() {
+        let result: String =
+            write_markdown_file("# Hello testing\n".to_string(), &mut "".to_string())
+                .unwrap_err()
+                .to_string();
+
+        let expected_error = "Empty string passed as `file_name`.".to_string();
+
+        assert_eq!(result, expected_error);
+    }
+
+    #[test]
+    fn valid_markdown_and_file_name_successfully_write_to_file() {
+        let test_directory: tempfile::TempDir =
+            tempdir().expect("Failed to create test directory!");
+
+        let mut file_name: String = test_directory
+            .path()
+            .to_str()
+            .expect("Failed to extract test directory path!")
+            .to_string();
+
+        file_name.extend("/test_md_file.md".chars());
+
+        let markdown: String = "# Hello from this file!".to_string();
+
+        let result: String = match write_markdown_file(markdown, &mut file_name) {
+            Ok(_) => "Success!".to_string(),
+            Err(file_error) => format!("Error: {}", file_error.to_string()),
+        };
+
+        assert_eq!(result, "Success!".to_string());
+
+        // Technically we're testing read here, but I like to know
+        let md_file_contents = match read_to_string(Path::new(&file_name)) {
+            Ok(contents) => contents,
+            Err(read_error) => format!("Error: {}", read_error),
+        };
+
+        assert_eq!(md_file_contents, "# Hello from this file!".to_string());
+    }
+}
