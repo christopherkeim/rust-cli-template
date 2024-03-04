@@ -31,3 +31,34 @@ pub fn convert_html_to_markdown(html: String) -> Result<String, HtmlConversionEr
 
     return Ok(html2md::parse_html(&html));
 }
+
+/// `markdown` module unit tests
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// Empty html string
+    #[test]
+    fn empty_html_returns_early_with_error() {
+        let result: String = convert_html_to_markdown("".to_string())
+            .unwrap_err()
+            .to_string();
+
+        let expected_error: String = "Empty string passed as `html`.".to_string();
+
+        assert_eq!(result, expected_error);
+    }
+
+    #[test]
+    /// Empty file name string
+    fn converts_valid_html_to_valid_markdown() {
+        let result: String = match convert_html_to_markdown("<h1>Header!</h1>".to_string()) {
+            Ok(markdown) => markdown,
+            Err(_) => "Failed!".to_string(),
+        };
+
+        let expected_markdown: String = "Header!\n==========".to_string();
+
+        assert_eq!(result, expected_markdown);
+    }
+}
