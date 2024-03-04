@@ -1,7 +1,7 @@
 use html2md;
 use std::fmt;
 
-/// Errors that occur during html conversion markdown
+/// Errors that occur during html conversion to markdown
 pub enum HtmlConversionError {
     /// Empty string passed as HTML
     EmptyHtml,
@@ -23,7 +23,7 @@ impl fmt::Display for HtmlConversionError {
 /// `html: String` a string of HTML
 ///
 /// # Reference
-/// https://crates.io/crates/html2md
+/// <https://crates.io/crates/html2md>
 pub fn convert_html_to_markdown(html: String) -> Result<String, HtmlConversionError> {
     if html.is_empty() {
         return Err(HtmlConversionError::EmptyHtml);
