@@ -5,7 +5,7 @@ use std::io::Write;
 /// Errors that occur during the process of writing a markdown file
 pub enum MarkdownFileError {
     /// Empty markdown string
-    Empty,
+    EmptyMarkdown,
     /// Empty output file name string
     EmptyFileName,
     /// Error creating file
@@ -17,7 +17,7 @@ pub enum MarkdownFileError {
 impl fmt::Display for MarkdownFileError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match *self {
-            MarkdownFileError::Empty => {
+            MarkdownFileError::EmptyMarkdown => {
                 write!(f, "Empty string passed as `markdown`.")
             }
             MarkdownFileError::EmptyFileName => {
@@ -29,14 +29,14 @@ impl fmt::Display for MarkdownFileError {
     }
 }
 
-/// Writes a markdown file to local storage.
+/// Writes a markdown file to local disk.
 ///
 /// # Arguments
 /// `markdown: String` a string holding markdown
 /// `file_name: String` name of output file
 pub fn write_markdown_file(markdown: String, file_name: &str) -> Result<(), MarkdownFileError> {
     if markdown.is_empty() {
-        return Err(MarkdownFileError::Empty);
+        return Err(MarkdownFileError::EmptyMarkdown);
     }
 
     if file_name.is_empty() {
