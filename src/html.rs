@@ -70,8 +70,8 @@ mod tests {
         assert_eq!(result, expected_error);
     }
 
-    #[test]
     /// Invalid URL
+    #[test]
     fn invalid_url_returns_early_with_error() {
         let result: String = extract_html_from_webpage("invalid_webpage.com".to_string())
             .unwrap_err()
@@ -82,6 +82,7 @@ mod tests {
         assert_eq!(result, expected_error);
     }
 
+    /// Valid request
     #[test]
     fn valid_request_returns_valid_html_string() {
         let result: String = match extract_html_from_webpage("https://www.google.com".to_string()) {
@@ -94,6 +95,7 @@ mod tests {
         assert!(result.starts_with(expected_doctype));
     }
 
+    /// Invalid request
     #[test]
     fn invalid_request_returns_request_failure() {
         let result: String =

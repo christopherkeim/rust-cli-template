@@ -49,8 +49,8 @@ mod tests {
         assert_eq!(result, expected_error);
     }
 
+    /// Valid html
     #[test]
-    /// Empty file name string
     fn converts_valid_html_to_valid_markdown() {
         let result: String = match convert_html_to_markdown("<h1>Header!</h1>".to_string()) {
             Ok(markdown) => markdown,
