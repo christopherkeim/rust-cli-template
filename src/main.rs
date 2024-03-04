@@ -14,17 +14,23 @@ fn main() {
     let html: String = match html::extract_html_from_webpage(args.url) {
         Ok(html) => html,
         Err(http_error) => {
-            eprintln!("Error making GET request: {}", http_error.to_string());
+            eprintln!("Error making GET request: {}", http_error);
             return;
         }
     };
 
-    let markdown: String = markdown::convert_html_to_markdown(html);
+    let markdown: String = match markdown::convert_html_to_markdown(html) {
+        Ok(markdown) => markdown,
+        Err(conversion_error) => {
+            eprintln!("Error converting HTML to markdown: {}", conversion_error);
+            return;
+        }
+    };
 
     match files::write_markdown_file(markdown, &args.file_name) {
         Ok(_) => println!("Successfully created {}", args.file_name),
         Err(file_error) => {
-            eprintln!("Error creating markdown file: {}", file_error.to_string());
+            eprintln!("Error creating markdown file: {}", file_error);
         }
     };
 }
