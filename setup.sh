@@ -5,7 +5,7 @@
 # 
 # Targets:
 #   - cargo 1.76.0
-#   - Docker 24.0.6
+#   - Docker 24.0.6 (optional with `--docker`)
 #
 # Requirements:
 #   - Ubuntu 20.04/22.04
@@ -17,6 +17,61 @@
 
 # Pull the current machine's distro for GPG key targeting
 readonly DISTRO="$(lsb_release -d | awk -F ' ' '{print tolower($2)}')"
+
+readonly PACKAGE="setup.sh"
+
+WITH_DOCKER=false
+
+show_help() {
+  cat <<END
+  Sets up Rust (cargo 1.76.0) environment for command-line 
+  application development on Ubuntu 20.04/22.04.
+
+  ${PACKAGE} [options] [arguments]
+
+  options:
+  -h, --help                Display help message
+  -d, --docker              Includes Docker 24.0.6 in installation
+END
+
+  exit 0
+}
+
+while getopts 'hd-:' flag; do
+  case "${flag}" in
+    h) show_help ;;
+    d) WITH_DOCKER=true ;;
+    -)
+      # Prefix substring removal matching "*="
+      LONG_OPTARG_VALUE="${OPTARG#*=}"
+      case ${OPTARG} in
+        help)
+          show_help
+          ;;
+        docker)
+          WITH_DOCKER=true
+          ;;
+        docker*)
+          echo "No arg for --${OPTARG} option" >&2
+          exit 2
+          ;;
+        help*)
+          echo "No arg allowed for --${OPTARG} option" >&2; 
+          exit 2
+          ;;
+        *)
+          echo "Unknown option --$OPTARG" >&2
+          exit 2 
+          ;;
+      esac 
+      ;;
+    # getopts already reported the unknown option error, so exit
+    \?) exit 2 ;;
+  esac
+done
+shift $((OPTIND-1))
+
+readonly WITH_DOCKER
 
 
 # -----------------------------------------------------------------------------------------------------------
@@ -109,6 +164,10 @@ fi
 # -----------------------------------------------------------------------------------------------------------
 # 3) Docker Install: here we'll install Docker
 # -----------------------------------------------------------------------------------------------------------
+
+if [[ $WITH_DOCKER == false ]]; then
+  exit 0
+fi
 
 # -----------------------------------------------------------------------------------------------------------
 # 3.1) Set up the repository: Before you install Docker Engine for the first time on a new host machine, 
