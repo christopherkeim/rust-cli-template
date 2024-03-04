@@ -77,7 +77,7 @@ fi
 
 # Ensure gnupg is installed on the machine
 if ( which gpg > /dev/null ); then
-  echo 'make is already installed 🟢'
+  echo 'gnupg is already installed 🟢'
 else
   echo 'Installing gnugp 🔧'
   sudo apt install -y gnupg
