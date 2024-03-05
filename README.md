@@ -53,7 +53,7 @@ cargo run -- \
 
 > This webpage is an excellent resource on error handling rust 😊.
 
-# `Makefile` Development Workflow Automation
+# Development Workflow Automation (`Makefile`)
 
 I like to use a `Makefile` to automate parts of my development workflow - this allows you to alias parts of your development process like linting, formatting, testing, and building binaries.
 
@@ -95,7 +95,7 @@ cargo fmt
 cargo test
 ```
 
-# `ci.yaml` Continuous Integration
+# Continuous Integration (`ci.yaml`)
 
 This repository has continuous integration that runs when Pull Requests are opened to the `main` branch.
 
@@ -113,7 +113,7 @@ This repository has continuous integration that runs when Pull Requests are open
 
 ## Dev and Release Profiles
 
-Cargo has two main profiles: the `dev` profile Cargo uses when you run `cargo build` and the `release` profile Cargo uses when you run c`argo build --release`. The dev profile is defined with good defaults for development, and the release profile has good defaults for release builds.
+Cargo has two main profiles: the `dev` profile Cargo uses when you run `cargo build` and the `release` profile Cargo uses when you run `cargo build --release`. The dev profile is defined with good defaults for development, and the release profile has good defaults for release builds.
 
 These profile names might be familiar from the output of your builds:
 
