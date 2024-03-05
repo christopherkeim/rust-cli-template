@@ -21,6 +21,8 @@ RUN cargo build --release
 # Copy artifacts to a clean image
 FROM debian:stable-slim
 
+RUN apt update && apt install -y openssl
+
 COPY --from=build /app/target/release/rust_cli_template .
 
 ENTRYPOINT [ "./rust_cli_template" ]
