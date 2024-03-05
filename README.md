@@ -109,6 +109,30 @@ This repository has continuous integration that runs when Pull Requests are open
 
 4. Builds a release binary for deployment (commented out - replace with your deployment strategy)
 
+# Containerization (`Dockerfile`)
+
+This template includes a `Dockerfile` that implements a multistage build with the final image using `debian:slim` with the `rust_cli_template` release binary as its entrypoint.
+
+> The `setup.sh` script is _idempotent_, and it will only make changes that bring your development environment closer to the desired state described in the script. If you'd like to include `docker` in your development environment, you can run it again with `--docker`.
+
+If you'd like to containerize the application:
+
+1. Create the image:
+
+```bash
+docker build -t rust-cli-template:v0 .
+```
+
+2. Run the container with:
+
+```bash
+docker run -it rust-cli-template:v0 \
+  --url https://web.mit.edu/rust-lang_v1.25/arch/amd64_ubuntu1404/share/doc/rust/html/book/first-edition/error-handling.html \
+  --file rust_error_handling.md
+```
+
+For this example application, it's a bit silly. But I've included it as a convenient starting point for building cloud workloads.
+
 # Notes
 
 ## Dev and Release Profiles
