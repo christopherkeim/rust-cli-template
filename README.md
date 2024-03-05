@@ -111,7 +111,7 @@ This repository has continuous integration that runs when Pull Requests are open
 
 # Containerization (`Dockerfile`)
 
-This template includes a `Dockerfile` that implements a multistage build with the final image using `debian:slim` with the `rust_cli_template` release binary as its entrypoint.
+This template includes a `Dockerfile` that implements a multistage build with the final image using `debian:slim` and the `rust_cli_template` release binary as its entrypoint.
 
 > The `setup.sh` script is _idempotent_, and it will only make changes that bring your development environment closer to the desired state described in the script. If you'd like to include `docker` in your development environment, you can run it again with `--docker`.
 
