@@ -101,13 +101,15 @@ This repository has continuous integration that runs when Pull Requests are open
 
 **Note that GitHub Action runners come pre-installed with cargo 1.76.0 (latest)**
 
-1. Checks out the source code into the runner VM
+The continuous integration pipeline implemented in `ci.yaml` runs the following steps:
 
-2. Formats source code
+1. `Checkout`: Checks out the source code into the runner VM
 
-3. Tests source code
+2. `Format`: Formats the source code files
 
-4. Builds a release binary for deployment (commented out - replace with your deployment strategy)
+3. `Test`: Runs the unit tests defined in each module
+
+4. `Build`: Builds a release binary for deployment (commented out - replace with your deployment strategy)
 
 # Containerization (`Dockerfile`)
 
