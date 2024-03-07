@@ -8,7 +8,7 @@ This repository implements a simple Rust command-line interface application that
 
 # Quickstart 🦀 🚀 ✨
 
-This repository is a GitHub Template that you can use to create a new repository for Rust-based command-line applications It comes pre-configured to use `cargo 1.76.0` with automated setup for `Ubuntu 20.04/22.04`.
+This repository is a GitHub Template that you can use to create a new repository for Rust-based command-line applications. It comes pre-configured to use `cargo 1.76.0` with automated setup for `Ubuntu 20.04/22.04`.
 
 To get started, you can:
 
