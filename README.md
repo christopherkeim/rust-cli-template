@@ -113,7 +113,7 @@ The continuous integration pipeline implemented in `ci.yaml` runs the following 
 
 # Containerization (`Dockerfile`)
 
-This template includes a `Dockerfile` that implements a multistage build with the final image using `debian:slim` and the `rust_cli_template` release binary as its entrypoint.
+This template includes a `Dockerfile` that implements a multistage build with the final image using `scratch` and the `rust_cli_template` release binary as its entrypoint.
 
 > The `setup.sh` script is _idempotent_, and it will only make changes that bring your development environment closer to the desired state described in the script. If you'd like to include `docker` in your development environment, you can run it again with `--docker`.
 
@@ -133,7 +133,23 @@ docker run -it rust-cli-template:v0 \
   --file rust_error_handling.md
 ```
 
-For this example application, it's a bit silly. But I've included it as a convenient starting point for building cloud workloads.
+For this example application, it's a bit silly. But I've included it as a convenient starting point for building cloud native workloads.
+
+### `rust:1.76-alpine` (Builder)
+
+The `rust:1.76-alpine` official Rust image uses `musl libc` to a build statically-linked Rust release binary. This is crucial for allowing the binary to run in our `scratch` image.
+
+### `scratch` (Final)
+
+`FROM scratch` essentially is an empty container - it is a no-op in the `docker build` process and it is used as a starting point for building minimal Docker Images ground up.
+
+> https://hub.docker.com/_/scratch:
+>
+> You can use Docker’s reserved, minimal image, `scratch`, as a starting point for building containers. Using the `scratch` “image” signals to the build process that you want the next command in the Dockerfile to be the first filesystem layer in your image.
+>
+> While scratch appears in Docker’s repository on the hub, you can’t pull it, run it, or tag any image with the name scratch. Instead, you can refer to it in your `Dockerfile`.
+
+In addition to making making your final image's size extremely small, it also hardens the security posture of our software by isolating the execution environment of the program - if an attacker penetrates into your runtime environment, it's an empty container with no further exploitable software.
 
 # Notes
 
