@@ -1,9 +1,11 @@
 # syntax=docker/dockerfile:1
 
 ###############################################################
-# Builder
+# Builder: builds a statically-linked Rust release binary
 ###############################################################
-FROM rust:1.76 as build
+FROM rust:1.76-alpine as build
+
+RUN apk add --no-cache musl-dev openssl-dev openssl-libs-static 
 
 WORKDIR /app
 
@@ -19,9 +21,9 @@ RUN cargo build --release
 ###############################################################
 
 # Copy artifacts to a clean image
-FROM debian:stable-slim
+FROM scratch
 
-RUN apt update && apt install -y openssl ca-certificates
+COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 
 COPY --from=build /app/target/release/rust_cli_template .
 
